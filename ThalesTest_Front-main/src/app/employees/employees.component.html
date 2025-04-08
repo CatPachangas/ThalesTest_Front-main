@@ -1,0 +1,70 @@
+<p>
+  <mat-toolbar>
+    <span>Employees</span>
+  </mat-toolbar>
+</p>
+<div>
+  <h1 style="margin-left: 2%">Search Employee</h1>
+  <mat-grid-list cols="2" rowHeight="4:1">
+    <mat-grid-tile>
+      <form>
+        <mat-form-field [formGroup]="form">
+          <mat-label>Type ID number</mat-label>
+          <input formControlName="idEmployee" matInput />
+          <mat-hint>Ex. 2</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color="primary" style="margin-left: 5px" (click)="getEmployeeById()">
+          Find
+        </button>
+      </form>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card style="width: 100%;padding: 0%;" *ngIf="showCard">
+        <mat-card-header>
+          <mat-card-title>Employee Data</mat-card-title>
+          <mat-card-subtitle>Id: {{employee.id}}</mat-card-subtitle>
+          <mat-card-subtitle>Name: {{employee.name}}</mat-card-subtitle>
+          <mat-card-subtitle>Age: {{employee.age}}</mat-card-subtitle>
+          <mat-card-subtitle>Salary: {{employee.salary | currency: 'USD'}}</mat-card-subtitle>
+          <mat-card-subtitle>Annual Salary: {{employee.annualSalary | currency: 'USD'}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="example-container mat-elevation-z8">
+    <mat-table style="width: 100%;" #table [dataSource]="employees" *ngIf="showTable">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id. </mat-header-cell>
+        <mat-cell *matCellDef="let employees"> {{ employees.id }} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let employees"> {{ employees.name }} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="salary">
+        <mat-header-cell *matHeaderCellDef> Salary </mat-header-cell>
+        <mat-cell *matCellDef="let employees"> {{ employees.salary | currency: 'USD' }} </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="age">
+        <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
+        <mat-cell *matCellDef="let employees"> {{ employees.age }} </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+        <mat-cell *matCellDef="let employees"> {{ employees.image }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>
